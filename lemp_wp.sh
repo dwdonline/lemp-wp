@@ -211,7 +211,7 @@ wget -q https://wordpress.org/latest.zip
 
 unzip latest.zip
 
-mv wordpress blog
+#mv wordpress blog
 
 echo
 read -e -p "---> What do you want to name your WordPress MySQL database?: " -i "" WP_MYSQL_DATABASE
