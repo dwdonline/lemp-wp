@@ -110,7 +110,7 @@ echo "---> NOW, LET'S SETUP SSL. YOU'LL NEED TO ADD YOUR CERTIFICATE LATER"
 pause
 
 echo
-read -e -p "---> What will your domain name be (without the www): " -i "domain.com" MY_DOMAIN
+read -e -p "---> What will your domain name be (without the www) - ie: domain.com: " -i "" MY_DOMAIN
 
 cd /etc/ssl/
 
@@ -118,8 +118,8 @@ mkdir sites
 
 cd sites
 
-openssl genrsa -out ${MY_DOMAIN}.key 2048
-openssl req -new -key ${MY_DOMAIN}.key -out ${MY_DOMAIN}.csr
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${MY_DOMAIN}.key -out ${MY_DOMAIN}.crt
+openssl x509 -in ${MY_DOMAIN}.crt -signkey ${MY_DOMAIN}.key -x509toreq -out ${MY_DOMAIN}.csr
 
 cd
 
@@ -129,7 +129,7 @@ pause
 #### Install nginx configuration
 #### IT WILL REMOVE ALL CONFIGURATION FILES THAT HAVE BEEN PREVIOUSLY INSTALLED.
 
-#NGINX_EXTRA_CONF="defaults.conf exclusions.conf fastcgi-cache.conf fastcgi-params.conf gzip.conf http.conf limits.conf mime-types.conf security.conf ssl.conf static-files.conf"
+#NGINX_EXTRA_CONF="defaults.conf exclusions.conf fastcgi-params.conf gzip.conf http.conf limits.conf mime-types.conf security.conf ssl.conf static-files.conf"
 #NGINX_EXTRA_CONF_URL="https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/"
 
 echo "---> CREATING NGINX CONFIGURATION FILES NOW"
@@ -145,7 +145,7 @@ cd wordpress
 
 wget -qO  /etc/nginx/wordpress/defaults.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/defaults.conf
 wget -qO  /etc/nginx/wordpress/exclusions.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/exclusions.conf
-wget -qO  /etc/nginx/wordpress/fastcgi-cache.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/fastcgi-cache.conf
+#wget -qO  /etc/nginx/wordpress/fastcgi-cache.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/fastcgi-cache.conf
 wget -qO  /etc/nginx/wordpress/fastcgi-params.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/fastcgi-params.conf
 wget -qO  /etc/nginx/wordpress/gzip.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/gzip.conf
 wget -qO  /etc/nginx/wordpress/http.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/http.conf
