@@ -48,7 +48,7 @@ add-apt-repository ppa:nginx/$nginx
 
 apt-get -y update
 
-add-apt-repository -y ppa:ondrej/php5-5.6
+add-apt-repository -y ppa:ondrej/php
 
 apt-get -y update
 
