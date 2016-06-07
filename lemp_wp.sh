@@ -161,7 +161,7 @@ wget -qO  /etc/nginx/conf.d/pagespeed.conf https://github.com/dwdonline/lemp-wp/
 
 cd /etc/nginx
 mv nginx.conf nginx.conf.bak
-wget -qO  /etc/nginx/nginx.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/nginx.conf
+wget -qO  /etc/nginx/nginx.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/nginx.conf
 
 #sed -i "s/www/sites-enabled/g" /etc/nginx/nginx.conf
 
