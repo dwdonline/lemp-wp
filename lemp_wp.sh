@@ -186,7 +186,10 @@ ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.c
 read -p "Would you like to install Adminer for managing your MySQL databases now? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-cd "/var/www/${MY_SITE_PATH}"
+cd "/var/www/"
+mkdir -p ${MY_SITE_PATH}
+cd ${MY_SITE_PATH}
+
 wget -q https://www.adminer.org/static/download/4.2.4/adminer-4.2.4-mysql.php
 mv adminer-4.2.4-mysql.php adminer.php
 else
