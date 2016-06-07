@@ -102,20 +102,24 @@ echo "percona-server-server-5.6 percona-server-server/root_password password ${M
 echo "percona-server-server-5.6 percona-server-server/root_password_again password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
 apt-get -y install percona-server-server-5.6 percona-server-client-5.6
 
+service mysql restart
+
+/usr/bin/mysql_secure_installation
+
 echo "---> NOW, LET'S SETUP SSL. YOU'LL NEED TO ADD YOUR CERTIFICATE LATER"
 pause
 
 echo
 read -e -p "---> What will your domain name be (without the www): " -i "domain.com" MY_DOMAIN
 
-cd "/etc/ssl/"
+cd /etc/ssl/
 
-mkdir "sites"
+mkdir sites
 
-cd "sites"
+cd sites
 
 openssl genrsa -out ${MY_DOMAIN}.key 2048
-openssl req -new -key ${MY_DOMAIN}.com.key -out ${MY_DOMAIN}.com.csr
+openssl req -new -key ${MY_DOMAIN}.key -out ${MY_DOMAIN}.csr
 
 cd
 
@@ -221,14 +225,19 @@ unzip latest.zip
 
 #mv wordpress blog
 
+cd wordpress
+
+mv * .htaccess ../
+
 echo
 read -e -p "---> What do you want to name your WordPress MySQL database?: " -i "" WP_MYSQL_DATABASE
 read -e -p "---> What do you want to name your WordPress MySQL user?: " -i "" WP_MYSQL_USER
 read -e -p "---> What do you want your WordPress MySQL password to be?: " -i "" WP_MYSQL_USER_PASSWORD
 
+
 echo "Please enter your MySQL root password below:"
 
-mysql -u root -p -e "CREATE database ${MYSQL_DATABASE}; CREATE user '${WP_MYSQL_USER}'@'localhost' IDENTIFIED BY '${WP_MYSQL_USER_PASSWORD}'; GRANT ALL PRIVILEGES ON ${WP_MYSQL_DATABASE}.* TO '${WP_MYSQL_USER}'@'localhost' IDENTIFIED BY '${WP_MYSQL_USER_PASSWORD}';"
+mysql -u root -p -e "CREATE database ${WP_MYSQL_DATABASE}; CREATE user '${WP_MYSQL_USER}'@'localhost' IDENTIFIED BY '${WP_MYSQL_USER_PASSWORD}'; GRANT ALL PRIVILEGES ON ${WP_MYSQL_DATABASE}.* TO '${WP_MYSQL_USER}'@'localhost' IDENTIFIED BY '${WP_MYSQL_USER_PASSWORD}';"
 
 echo "Your database name is: ${WP_MYSQL_DATABASE}"
 echo "Your database user is: ${WP_MYSQL_USER}"
