@@ -251,9 +251,9 @@ echo "Your database name is: ${WP_MYSQL_DATABASE}"
 echo "Your database user is: ${WP_MYSQL_USER}"
 echo "Your databse password is: ${WP_MYSQL_USER_PASSWORD}"
 
-cd ${MY_SITE_PATH}
+cd "${MY_SITE_PATH}"
 
-cp wp-config-sample.php wp-config.php
+cp -r wp-config-sample.php wp-config.php
 
 sed -i "s,database_name_here,${WP_MYSQL_DATABASE},g" wp-config.php
 sed -i "s,username_here,${WP_MYSQL_USER},g" wp-config.php
