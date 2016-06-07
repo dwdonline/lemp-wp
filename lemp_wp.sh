@@ -251,6 +251,8 @@ echo "Your database name is: ${WP_MYSQL_DATABASE}"
 echo "Your database user is: ${WP_MYSQL_USER}"
 echo "Your databse password is: ${WP_MYSQL_USER_PASSWORD}"
 
+service mysql restart
+
 cd "${MY_SITE_PATH}"
 
 cp -r wp-config-sample.php wp-config.php
@@ -258,6 +260,16 @@ cp -r wp-config-sample.php wp-config.php
 sed -i "s,database_name_here,${WP_MYSQL_DATABASE},g" wp-config.php
 sed -i "s,username_here,${WP_MYSQL_USER},g" wp-config.php
 sed -i "s,password_here,${WP_MYSQL_USER_PASSWORD},g" wp-config.php
+
+#set WP salts
+perl -i -pe'
+  BEGIN {
+    @chars = ("a" .. "z", "A" .. "Z", 0 .. 9);
+    push @chars, split //, "!@#$%^&*()-_ []{}<>~\`+=,.;:/?|";
+    sub salt { join "", map $chars[ rand @chars ], 1 .. 64 }
+  }
+  s/put your unique phrase here/salt()/ge
+' wp-config.php
 
 else
   exit 0
