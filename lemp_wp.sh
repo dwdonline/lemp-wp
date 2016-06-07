@@ -166,6 +166,9 @@ wget -qO  /etc/nginx/nginx.conf https://raw.githubusercontent.com/dwdonline/lemp
 #sed -i "s/www/sites-enabled/g" /etc/nginx/nginx.conf
 
 mkdir -p /etc/nginx/sites-enabled
+
+rm -rf /etc/nginx/sites-available/default
+
 mkdir -p /etc/nginx/sites-available && cd $_
 wget -q https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/sites-available/default.conf
 wget -qO /etc/nginx/sites-available/${MY_DOMAIN}.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/sites-available/domain.conf
