@@ -81,12 +81,13 @@ pause
 
 echo
 read -e -p "---> What do you want your MySQL root password to be?: " -i "password" MYSQL_ROOT_PASSWORD
+read -e -p "---> What version of Ubuntu? 14 is trusty, 15 is wily: " -i "wily" UBUNTU_VERSION
 
 apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
 
-echo "deb http://repo.percona.com/apt trusty main" >> /etc/apt/sources.list
+echo "deb http://repo.percona.com/apt ${UBUNTU_VERSION} main" >> /etc/apt/sources.list
 
-echo "deb-src http://repo.percona.com/apt trusty main" >> /etc/apt/sources.list
+echo "deb-src http://repo.percona.com/apt ${UBUNTU_VERSION} main" >> /etc/apt/sources.list
 
 touch /etc/apt/preferences.d/00percona.pref
 
