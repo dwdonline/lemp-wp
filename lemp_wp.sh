@@ -143,21 +143,21 @@ cd /etc/nginx
 mkdir -p wordpress
 cd wordpress
 
-wget -qO  /etc/nginx/wordpress/defaults.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/defaults.conf
-wget -qO  /etc/nginx/wordpress/exclusions.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/exclusions.conf
-wget -qO  /etc/nginx/wordpress/fastcgi-cache.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/fastcgi-cache.conf
-wget -qO  /etc/nginx/wordpress/fastcgi-params.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/fastcgi-params.conf
-wget -qO  /etc/nginx/wordpress/gzip.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/gzip.conf
-wget -qO  /etc/nginx/wordpress/http.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/http.conf
-wget -qO  /etc/nginx/wordpress/limits.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/limits.conf
-wget -qO  /etc/nginx/wordpress/mime-types.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/mime-types.conf
-wget -qO  /etc/nginx/wordpress/security.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/security.conf
-wget -qO  /etc/nginx/wordpress/ssl.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/ssl.conf
-wget -qO  /etc/nginx/wordpress/static-files.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/static-files.conf
+wget -qO  /etc/nginx/wordpress/defaults.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/defaults.conf
+wget -qO  /etc/nginx/wordpress/exclusions.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/exclusions.conf
+wget -qO  /etc/nginx/wordpress/fastcgi-cache.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/fastcgi-cache.conf
+wget -qO  /etc/nginx/wordpress/fastcgi-params.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/fastcgi-params.conf
+wget -qO  /etc/nginx/wordpress/gzip.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/gzip.conf
+wget -qO  /etc/nginx/wordpress/http.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/http.conf
+wget -qO  /etc/nginx/wordpress/limits.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/limits.conf
+wget -qO  /etc/nginx/wordpress/mime-types.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/mime-types.conf
+wget -qO  /etc/nginx/wordpress/security.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/security.conf
+wget -qO  /etc/nginx/wordpress/ssl.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/ssl.conf
+wget -qO  /etc/nginx/wordpress/static-files.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/static-files.conf
 
 cd /etc/nginx/conf.d
 
-wget -qO  /etc/nginx/conf.d/pagespeed.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/conf.d/pagespeed.conf
+wget -qO  /etc/nginx/conf.d/pagespeed.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/conf.d/pagespeed.conf
 
 cd /etc/nginx
 mv nginx.conf nginx.conf.bak
