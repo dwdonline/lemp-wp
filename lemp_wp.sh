@@ -98,9 +98,9 @@ echo "Pin-Priority: 1001" >> /etc/apt/preferences.d/00percona.pref
 apt-get -y update
 
 export DEBIAN_FRONTEND=noninteractive
-echo "percona-server-server-5.7 percona-server-server/root_password password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
-echo "percona-server-server-5.7 percona-server-server/root_password_again password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
-apt-get -y install percona-server-server-5.7 percona-server-client-5.7
+echo "percona-server-server-5.6 percona-server-server/root_password password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
+echo "percona-server-server-5.6 percona-server-server/root_password_again password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
+apt-get -y install percona-server-server-5.6 percona-server-client-5.6
 
 echo "---> NOW, LET'S SETUP SSL. YOU'LL NEED TO ADD YOUR CERTIFICATE LATER"
 pause
@@ -150,9 +150,12 @@ wget -qO  /etc/nginx/wordpress/mime-types.conf https://github.com/dwdonline/lemp
 wget -qO  /etc/nginx/wordpress/security.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/security.conf
 wget -qO  /etc/nginx/wordpress/ssl.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/ssl.conf
 wget -qO  /etc/nginx/wordpress/static-files.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/wordpress/static-files.conf
+
+cd /etc/nginx/conf.d
+
 wget -qO  /etc/nginx/conf.d/pagespeed.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/conf.d/pagespeed.conf
 
-cd ../
+cd /etc/nginx
 mv nginx.conf nginx.conf.bak
 wget -qO  /etc/nginx/wordpress/nginx.conf https://github.com/dwdonline/lemp-wp/blob/master/nginx/nginx.conf
 
@@ -183,12 +186,13 @@ ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.c
 
 #sed -i '/http   {/a     ## Pagespeed module\n    pagespeed  FileCachePath  "/var/tmp/";\n    pagespeed  LogDir "/var/log/pagespeed";\n    pagespeed ProcessScriptVariables on;\n' /etc/nginx/nginx.conf
 
-read -p "Would you like to install Adminer for managing your MySQL databases now? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-then
 cd "/var/www/"
 mkdir -p ${MY_SITE_PATH}
 cd ${MY_SITE_PATH}
+
+read -p "Would you like to install Adminer for managing your MySQL databases now? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
 
 wget -q https://www.adminer.org/static/download/4.2.4/adminer-4.2.4-mysql.php
 mv adminer-4.2.4-mysql.php adminer.php
@@ -209,7 +213,7 @@ read -p "Would you like to install WordPress now? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 
-cd "/var/www/${MY_SITE_PATH}"
+cd "${MY_SITE_PATH}"
 
 wget -q https://wordpress.org/latest.zip
 
@@ -239,15 +243,15 @@ pause
 
 echo "Lovely, this may take a few minutes. Dont fret."
 
-cd "/var/www/${MY_SITE_PATH}"
+cd "${MY_SITE_PATH}"
 
-chown -R ${NEW_ADMIN.www-data *
+chown -R ${NEW_ADMIN}.www-data *
 
 find . -type f -exec chmod 644 {} \;
 find . -type d -exec chmod 755 {} \; 
 
-find wp-content/ -type f -exec chmod 600 {} \; 
-find wp-content/ -type d -exec chmod 700 {} \;
+find ${MY_SITE_PATH}/wp-content/ -type f -exec chmod 600 {} \; 
+find ${MY_SITE_PATH}/wp-content/ -type d -exec chmod 700 {} \;
 
 echo "---> Let;s cleanup:"
 pause
