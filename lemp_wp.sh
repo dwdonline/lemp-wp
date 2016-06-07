@@ -178,7 +178,7 @@ sed -i "s,fastcgi_cache_path,fastcgi_cache_path ${MY_SITE_PATH}/fastcgi-cache le
 sed -i "s/www.example.com/www.${MY_DOMAIN}/g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,root /var/www/html,root ${MY_SITE_PATH},g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,user  www-data,user  ${MY_WEB_USER},g" /etc/nginx/nginx.conf
-sed -i "s,ssl_certificate,ssl_certificate /etc/ssl/sites/${MY_DOMAIN}.crt;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
+sed -i "s,ssl_certificate_name,ssl_certificate /etc/ssl/sites/${MY_DOMAIN}.crt;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,ssl_certificate_key,ssl_certificate_key /etc/ssl/sites/${MY_DOMAIN}.key;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,access_log,access_log /var/log/nginx/${MY_DOMAIN}_access.log;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,error_log,error_log /var/log/nginx/${MY_DOMAIN}_error.log;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
