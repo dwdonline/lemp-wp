@@ -175,6 +175,7 @@ wget -qO /etc/nginx/sites-available/${MY_DOMAIN}.conf https://raw.githubusercont
 
 sed -i "s/example.com/${MY_DOMAIN}/g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,fastcgi_cache_path,fastcgi_cache_path ${MY_SITE_PATH}/fastcgi-cache levels=1:2 keys_zone=${MY_DOMAIN}:100m inactive=60m;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
+sed -i "s,fastcgi_cache_domain,fastcgi_cache_domain ${MY_DOMAIN};,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s/www.example.com/www.${MY_DOMAIN}/g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,root /var/www/html,root ${MY_SITE_PATH},g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,user  www-data,user  ${MY_WEB_USER},g" /etc/nginx/nginx.conf
