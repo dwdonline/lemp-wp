@@ -80,7 +80,7 @@ echo "---> INSTALLING PERCONA"
 pause
 
 echo
-read -e -p "---> What do you want your MySQL root password to be?: " -i "password" MYSQL_ROOT_PASSWORD
+read -e -p "---> What do you want your MySQL root password to be?: " -i "" MYSQL_ROOT_PASSWORD
 read -e -p "---> What version of Ubuntu? 14 is trusty, 15 is wily: " -i "wily" UBUNTU_VERSION
 
 apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
@@ -135,7 +135,7 @@ read -e -p "---> Enter your domain name (without www.): " -i "domain.com" MY_DOM
 read -e -p "---> Enter your web root path: " -i "/var/www/html" MY_SITE_PATH
 read -e -p "---> Enter your web user usually www-data (nginx for Centos): " -i "www-data" MY_WEB_USER
 
-cd /var/etc/nginx
+cd /etc/nginx
 mkdir -p wordpress
 cd wordpress
 
@@ -186,7 +186,7 @@ ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.c
 read -p "Would you like to install Adminer for managing your MySQL databases now? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-cd "/var/www/html"
+cd "/var/www/${MY_SITE_PATH}"
 wget -q https://www.adminer.org/static/download/4.2.4/adminer-4.2.4-mysql.php
 mv adminer-4.2.4-mysql.php adminer.php
 else
@@ -206,7 +206,7 @@ read -p "Would you like to install WordPress now? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 
-cd "/var/www/html"
+cd "/var/www/${MY_SITE_PATH}"
 
 wget -q https://wordpress.org/latest.zip
 
@@ -231,12 +231,12 @@ else
   exit 0
 fi
 
-echo "---> Last thing, let's set the permissions for WordPresss:"
+echo "---> Let's set the permissions for WordPresss:"
 pause
 
 echo "Lovely, this may take a few minutes. Dont fret."
 
-cd "/var/www/html"
+cd "/var/www/${MY_SITE_PATH}"
 
 chown -R ${NEW_ADMIN.www-data *
 
@@ -245,5 +245,10 @@ find . -type d -exec chmod 755 {} \;
 
 find wp-content/ -type f -exec chmod 600 {} \; 
 find wp-content/ -type d -exec chmod 700 {} \;
+
+echo "---> Let;s cleanup:"
+pause
+cd
+rm -rf master.zip nginx-1.10.1 nginx-1.10.1.tar.gz ngx_pagespeed-master
 
 echo "I just saved you a shitload of time and headache. You're welcome."
