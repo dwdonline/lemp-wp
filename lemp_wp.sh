@@ -81,7 +81,7 @@ pause
 
 echo
 read -e -p "---> What do you want your MySQL root password to be?: " -i "" MYSQL_ROOT_PASSWORD
-read -e -p "---> What version of Ubuntu? 14 is trusty, 15 is wily: " -i "wily" UBUNTU_VERSION
+read -e -p "---> What version of Ubuntu? 14 is trusty, 15 is wily, 16 is xenial: " -i "xenial" UBUNTU_VERSION
 
 apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
 
