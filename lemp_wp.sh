@@ -297,4 +297,8 @@ pause
 cd
 rm -rf master.zip nginx-1.10.1 nginx-1.10.1.tar.gz ngx_pagespeed-master
 
+cd "${MY_SITE_PATH}"
+
+rm -rf wordpress
+
 echo "I just saved you a shitload of time and headache. You're welcome."
