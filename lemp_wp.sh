@@ -52,7 +52,7 @@ add-apt-repository -y ppa:ondrej/php
 
 apt-get -y update
 
-apt-get -y install php5-fpm php5-mhash php5-mcrypt php5-curl php5-cli php5-mysql php5-gd php5-intl php5-xsl libperl-dev libpcre3 libpcre3-dev libssl-dev php5-gd libgd2-xpm-dev libgeoip-dev libgd2-xpm-dev nginx
+apt-get -y install php5.6-fpm php5.6-mcrypt php5.6-curl php5.6-cli php5.6-mysql php5.6-gd php5.6-intl php5.6-xsl libperl-dev libpcre3 libpcre3-dev libssl-dev php5.6-gd libgd2-xpm-dev libgeoip-dev libgd2-xpm-dev nginx
 
 echo "---> NOW, LET'S COMPILE NGINX WITH PAGESPEED"
 pause
