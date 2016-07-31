@@ -94,9 +94,9 @@ echo "Pin-Priority: 1001" >> /etc/apt/preferences.d/00percona.pref
 apt-get -y update
 
 export DEBIAN_FRONTEND=noninteractive
-echo "percona-server-server-5.6 percona-server-server/root_password password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
-echo "percona-server-server-5.6 percona-server-server/root_password_again password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
-apt-get -y install percona-server-server-5.6 percona-server-client-5.6
+echo "percona-server-server-5.7 percona-server-server/root_password password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
+echo "percona-server-server-5.7 percona-server-server/root_password_again password ${MYSQL_ROOT_PASSWORD}" | sudo debconf-set-selections
+apt-get -y install percona-server-server-5.7 percona-server-client-5.7
 
 service mysql restart
 
