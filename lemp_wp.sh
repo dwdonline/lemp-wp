@@ -214,8 +214,10 @@ else
   exit 0
 fi
 
-echo "---> Let's install Postfix to handle sending mail:"
+echo "---> Let's remove sendmail and install Postfix to handle sending mail:"
 pause
+
+apt-get --purge remove sendmail sendmail-base sendmail-bin
 
 read -e -p "---> What would you like your host to be? I like it to be something like mail.domain.com: " -i "" POSTFIX_SERVER
 
