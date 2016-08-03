@@ -1,0 +1,12 @@
+User-agent: *
+
+Disallow: /comment-page-
+Disallow: /feed/
+Disallow: /trackback/
+Disallow: /license.txt
+Disallow: /readme.html
+Disallow: /xmlrpc.php
+Disallow: /*.php$
+Disallow: /?s=*
+
+Sitemap: http://YOUR-DOMAIN.com/sitemap_index.xml
