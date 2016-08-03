@@ -150,6 +150,7 @@ wget -qO  /etc/nginx/wordpress/mime-types.conf https://raw.githubusercontent.com
 wget -qO  /etc/nginx/wordpress/security.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/security.conf
 wget -qO  /etc/nginx/wordpress/ssl.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/ssl.conf
 wget -qO  /etc/nginx/wordpress/static-files.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/static-files.conf
+wget -qO  /etc/nginx/wordpress/yoast.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/yoast.conf
 
 cd /etc/nginx/conf.d
 
