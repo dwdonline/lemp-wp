@@ -125,18 +125,10 @@ find ${MY_SITE_PATH}/wp-content/ -type d -exec chmod 700 {} \;
 echo "---> Let;s cleanup:"
 pause
 cd
-rm -rf master.zip nginx-1.10.1 nginx-1.10.1.tar.gz ngx_pagespeed-master
 
 cd ${MY_SITE_PATH}
 
-read -p "Would you like to install Adminer for managing your MySQL databases now? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-then
-
-wget -q https://www.adminer.org/static/download/4.2.4/adminer-4.2.4-mysql.php
-mv adminer-4.2.4-mysql.php adminer.php
-chmod 600 adminer.php
-chown -R ${ADMIN_USER}.www-data adminer.php
+rm -rf wordpress
 
 else
   exit 0
