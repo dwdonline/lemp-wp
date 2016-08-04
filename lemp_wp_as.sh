@@ -110,10 +110,6 @@ perl -i -pe'
   s/put your unique phrase here/salt()/ge
 ' wp-config.php
 
-else
-  exit 0
-fi
-
 echo "---> Let's add a robots.txt file for WordPresss:"
 wget -qO ${MY_SITE_PATH}/robots.txt https://raw.githubusercontent.com/dwdonline/lemp-wp/master/robots.txt
 
@@ -146,6 +142,6 @@ cd ${MY_SITE_PATH}
 rm -rf wordpress
 
 else
-  exit 0
+exit 0
   echo "I just saved you a shitload of time and headache. You're welcome."
 fi
