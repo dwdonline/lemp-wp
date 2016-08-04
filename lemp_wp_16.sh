@@ -307,4 +307,6 @@ cd "${MY_SITE_PATH}"
 
 rm -rf wordpress
 
+apt-mark hold nginx nginx-full nginx-common
+
 echo "I just saved you a shitload of time and headache. You're welcome."
