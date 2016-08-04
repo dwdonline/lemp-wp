@@ -303,10 +303,16 @@ pause
 cd
 rm -rf master.zip nginx-1.10.1 nginx-1.10.1.tar.gz ngx_pagespeed-master
 
-cd "${MY_SITE_PATH}"
+cd ${MY_SITE_PATH}
 
 rm -rf wordpress
 
 apt-mark hold nginx nginx-full nginx-common
+
+cd /etc/nginx/sites-enabled
+
+rm -rf /etc/nginx/sites-enabled/default
+
+cd
 
 echo "I just saved you a shitload of time and headache. You're welcome."
