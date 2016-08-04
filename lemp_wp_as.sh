@@ -107,8 +107,7 @@ perl -i -pe'
     push @chars, split //, "!@#$%^&*()-_ []{}<>~\`+=,.;:/?|";
     sub salt { join "", map $chars[ rand @chars ], 1 .. 64 }
   }
-  s/put your unique phrase here/salt()/ge
-' wp-config.php
+  s/put your unique phrase here/salt()/ge' wp-config.php
 
 echo "---> Let's add a robots.txt file for WordPresss:"
 wget -qO ${MY_SITE_PATH}/robots.txt https://raw.githubusercontent.com/dwdonline/lemp-wp/master/robots.txt
@@ -122,9 +121,9 @@ echo "Lovely, this may take a few minutes. Dont fret."
 
 cd "${MY_SITE_PATH}"
 
-chown -R ${NEW_ADMIN}.www-data *
+chown -R ${ADMIN_USER}.www-data *
 
-chown -R ${NEW_ADMIN}.www-data robots.txt
+chown -R ${ADMIN_USER}.www-data robots.txt
 
 find . -type f -exec chmod 644 {} \;
 find . -type d -exec chmod 755 {} \; 
@@ -135,7 +134,7 @@ find ${MY_SITE_PATH}/wp-content/ -type d -exec chmod 700 {} \;
 echo "---> Let;s cleanup:"
 pause
 cd
-rm -rf master.zip nginx-1.10.1 nginx-1.10.1.tar.gz ngx_pagespeed-master
+rm -rf lemp_wp_as.sh
 
 cd ${MY_SITE_PATH}
 
