@@ -7,7 +7,13 @@ pause(){
  read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
 }
 
-echo "---> WELCOME! Let's create a new site!"
+echo "---> WELCOME! FIRST WE NEED TO MAKE SURE THE SYSTEM IS UP TO DATE!"
+pause
+
+apt-get update
+apt-get -y upgrade
+
+echo "---> WELCOME! Let's create a new site! First, we will create the SSL"
 pause
 
 echo
@@ -21,13 +27,13 @@ openssl x509 -in ${MY_DOMAIN}.crt -signkey ${MY_DOMAIN}.key -x509toreq -out ${MY
 
 cd
 
-echo "---> OK, WE ARE DONE SETTING UP THE SERVER. LET'S PROCEED TO CONFIGURING THE NGINX HOST FILES FOR WORDPRESS"
+echo "---> OK, LET'S PROCEED TO CONFIGURING THE NGINX HOST FILES FOR WORDPRESS"
 pause
 
 echo "---> CREATING NGINX CONFIGURATION FILES NOW"
 echo
 
-read -e -p "---> Enter your web root path: " -i "/var/www/" MY_SITE_PATH
+read -e -p "---> Enter your web root path: " -i "/var/www/${MY_DOMAIN}" MY_SITE_PATH
 read -e -p "---> Enter your web user usually www-data (nginx for Centos): " -i "www-data" MY_WEB_USER
 
 cd /etc/nginx/sites-available/
@@ -75,6 +81,7 @@ read -e -p "---> What do you want to name your WordPress MySQL database?: " -i "
 read -e -p "---> What do you want to name your WordPress MySQL user?: " -i "" WP_MYSQL_USER
 read -e -p "---> What do you want your WordPress MySQL password to be?: " -i "" WP_MYSQL_USER_PASSWORD
 
+
 echo "Please enter your MySQL root password below:"
 
 mysql -u root -p -e "CREATE database ${WP_MYSQL_DATABASE}; CREATE user '${WP_MYSQL_USER}'@'localhost' IDENTIFIED BY '${WP_MYSQL_USER_PASSWORD}'; GRANT ALL PRIVILEGES ON ${WP_MYSQL_DATABASE}.* TO '${WP_MYSQL_USER}'@'localhost' IDENTIFIED BY '${WP_MYSQL_USER_PASSWORD}';"
@@ -107,6 +114,11 @@ else
   exit 0
 fi
 
+echo "---> Let's add a robots.txt file for WordPresss:"
+wget -qO ${MY_SITE_PATH}/robots.txt https://raw.githubusercontent.com/dwdonline/lemp-wp/master/robots.txt
+
+sed -i "s,Sitemap: http://YOUR-DOMAIN.com/sitemap_index.xml,Sitemap: https://www.${MY_DOMAIN}/sitemap_index.xml,g" ${MY_SITE_PATH}/robots.txt
+
 echo "---> Let's set the permissions for WordPresss:"
 pause
 
@@ -115,6 +127,8 @@ echo "Lovely, this may take a few minutes. Dont fret."
 cd "${MY_SITE_PATH}"
 
 chown -R ${NEW_ADMIN}.www-data *
+
+chown -R ${NEW_ADMIN}.www-data robots.txt
 
 find . -type f -exec chmod 644 {} \;
 find . -type d -exec chmod 755 {} \; 
@@ -125,6 +139,7 @@ find ${MY_SITE_PATH}/wp-content/ -type d -exec chmod 700 {} \;
 echo "---> Let;s cleanup:"
 pause
 cd
+rm -rf master.zip nginx-1.10.1 nginx-1.10.1.tar.gz ngx_pagespeed-master
 
 cd ${MY_SITE_PATH}
 
