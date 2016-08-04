@@ -11,3 +11,14 @@ wget -q https://raw.githubusercontent.com/dwdonline/lemp-wp/master/lemp_wp_16.sh
 chmod 550 lemp_wp_16.sh
 
 ./lemp_wp_16.sh
+
+
+For creating a new site on the already setup server:
+
+cd
+
+wget -q https://raw.githubusercontent.com/dwdonline/lemp-wp/master/lemp_wp_as.sh
+
+chmod 550 lemp_wp_as.sh
+
+./lemp_wp_as.sh
