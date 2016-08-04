@@ -6,8 +6,8 @@ cd to the directory you want to put the script in. I usually just go to root:
 
 cd
 
-wget -q https://raw.githubusercontent.com/dwdonline/lemp-wp/master/lemp_wp.sh
+wget -q https://raw.githubusercontent.com/dwdonline/lemp-wp/master/lemp_wp_16.sh
 
-chmod 550 lemp_wp.sh
+chmod 550 lemp_wp_16.sh
 
-./lemp_wp.sh
+./lemp_wp_16.sh
