@@ -48,7 +48,7 @@ add-apt-repository ppa:nginx/$nginx
 
 apt-get -y update
 
-apt-get -y install php7.0-fpm php7.0-mcrypt php7.0-curl php7.0-cli php7.0-mysql php7.0-gd php7.0-intl php7.0-xsl libperl-dev libpcre3 libpcre3-dev libssl-dev php7.0-gd libgd2-xpm-dev libgeoip-dev libgd2-xpm-dev libssh2-1 php-ssh2 nginx
+apt-get -y install php7.0-fpm php7.0-mcrypt php7.0-curl php7.0-cli php7.0-mysql php7.0-gd php7.0-intl php7.0-xsl libperl-dev libpcre3 libpcre3-dev libssl-dev php7.0-gd libgd2-xpm-dev libgeoip-dev libgd2-xpm-dev libssh2-1 php-ssh2 php7.0-mbstring nginx
 
 echo "---> NOW, LET'S COMPILE NGINX WITH PAGESPEED"
 pause
@@ -71,6 +71,51 @@ make
 make install
 
 service nginx restart
+
+echo "---> NOW, LET'S SETUP SSL. YOU'LL NEED TO ADD YOUR CERTIFICATE LATER"
+pause
+
+sudo apt-get -y install letsencrypt
+
+echo
+read -e -p "---> What will your main domain be - ie: domain.com: " -i "" MY_DOMAIN
+read -e -p "---> Any additional domain name(s) seperated: domain.com, dev.domain.com: " -i "www.${MY_DOMAIN}" MY_DOMAINS
+
+#cd /etc/ssl/
+cd
+
+export DOMAINS="${MY_DOMAIN},www.${MY_DOMAIN},${MY_DOMAINS}"
+export DIR=/var/www/html
+sudo letsencrypt certonly -a webroot --webroot-path=$DIR -d $DOMAINS
+
+openssl dhparam -out /etc/ssl/dhparams.pem 2048
+
+echo "---> NOW, LET'S SETUP SSL to renew every 60 days."
+pause
+
+cd
+
+cat > renewCerts.sh <<EOF
+#!/bin/sh
+# This script renews all the Let's Encrypt certificates with a validity < 30 days
+
+if ! letsencrypt renew > /var/log/letsencrypt/renew.log 2>&1 ; then
+    echo Automated renewal failed:
+    cat /var/log/letsencrypt/renew.log
+    exit 1
+fi
+nginx -t && nginx -s reload
+EOF
+
+#write out current crontab
+crontab -l > mycron
+#echo new cron into cron file
+echo "@daily /root/renewCerts.sh" >> mycron
+#install new cron file
+crontab mycron
+rm mycron
+
+chmod +x /root/renewCerts.sh
 
 echo "---> INSTALLING PERCONA"
 pause
@@ -101,21 +146,6 @@ apt-get -y install percona-server-server-5.7 percona-server-client-5.7
 service mysql restart
 
 /usr/bin/mysql_secure_installation
-
-echo "---> NOW, LET'S SETUP SSL. YOU'LL NEED TO ADD YOUR CERTIFICATE LATER"
-pause
-
-echo
-read -e -p "---> What will your domain name be (without the www) - ie: domain.com: " -i "" MY_DOMAIN
-
-cd /etc/ssl/
-
-mkdir sites
-
-cd sites
-
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${MY_DOMAIN}.key -out ${MY_DOMAIN}.crt
-openssl x509 -in ${MY_DOMAIN}.crt -signkey ${MY_DOMAIN}.key -x509toreq -out ${MY_DOMAIN}.csr
 
 cd
 
@@ -176,8 +206,8 @@ sed -i "s,fastcgi_cache_domain,fastcgi_cache_domain ${MY_DOMAIN};,g" /etc/nginx/
 sed -i "s/www.example.com/www.${MY_DOMAIN}/g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,root /var/www/html,root ${MY_SITE_PATH},g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,user  www-data,user  ${MY_WEB_USER},g" /etc/nginx/nginx.conf
-sed -i "s,ssl_certificate_name,ssl_certificate /etc/ssl/sites/${MY_DOMAIN}.crt;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
-sed -i "s,ssl_certificate_key,ssl_certificate_key /etc/ssl/sites/${MY_DOMAIN}.key;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
+sed -i "s,ssl_certificate_name,ssl_certificate  /etc/letsencrypt/live/${MY_DOMAIN}/fullchain.pem;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
+sed -i "s,ssl_certificate_key,ssl_certificate_key /etc/letsencrypt/live/${MY_DOMAIN}/privkey.pem;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,access_log,access_log /var/log/nginx/${MY_DOMAIN}_access.log;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,error_log,error_log /var/log/nginx/${MY_DOMAIN}_error.log;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 
@@ -314,5 +344,8 @@ cd /etc/nginx/sites-enabled
 rm -rf /etc/nginx/sites-enabled/default
 
 cd
+
+# Let's set the server to update itself:
+sudo dpkg-reconfigure --priority=low unattended-upgrades
 
 echo "I just saved you a shitload of time and headache. You're welcome."
