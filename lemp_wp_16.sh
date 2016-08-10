@@ -107,13 +107,8 @@ fi
 nginx -t && nginx -s reload
 EOF
 
-#write out current crontab
-crontab -l > mycron
-#echo new cron into cron file
-echo "@daily /root/renewCerts.sh" >> mycron
-#install new cron file
-crontab mycron
-rm mycron
+#Add cronjob for renewing ssl
+(crontab -l 2>/dev/null; echo "@daily /root/renewCerts.sh") | crontab -
 
 chmod +x /root/renewCerts.sh
 
@@ -227,8 +222,15 @@ ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.c
 
 #sed -i '/http   {/a     ## Pagespeed module\n    pagespeed  FileCachePath  "/var/tmp/";\n    pagespeed  LogDir "/var/log/pagespeed";\n    pagespeed ProcessScriptVariables on;\n' /etc/nginx/nginx.conf
 
-cd "/var/www/"
+#Create host root
+cd
 mkdir -p ${MY_SITE_PATH}
+
+#Copy verification folder for SSL
+cd "/var/www/html"
+cp -r ".well-known" ${MY_SITE_PATH}
+
+#Move to site root
 cd ${MY_SITE_PATH}
 
 read -p "Would you like to install Adminer for managing your MySQL databases now? <y/N> " prompt
@@ -335,7 +337,7 @@ rm -rf master.zip nginx-1.10.1 nginx-1.10.1.tar.gz ngx_pagespeed-master
 
 cd ${MY_SITE_PATH}
 
-rm -rf wordpress
+rm -rf wordpress latest.zip
 
 apt-mark hold nginx nginx-full nginx-common
 
