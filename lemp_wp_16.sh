@@ -330,6 +330,8 @@ find . -type d -exec chmod 755 {} \;
 find ${MY_SITE_PATH}/wp-content/ -type f -exec chmod 600 {} \; 
 find ${MY_SITE_PATH}/wp-content/ -type d -exec chmod 700 {} \;
 
+chown -R www-data.www-data wp-content
+
 echo "---> Let;s cleanup:"
 pause
 cd
