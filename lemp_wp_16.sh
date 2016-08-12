@@ -48,7 +48,7 @@ add-apt-repository ppa:nginx/$nginx
 
 apt-get -y update
 
-apt-get -y install php7.0-fpm php7.0-mcrypt php7.0-curl php7.0-cli php7.0-mysql php7.0-gd php7.0-intl php7.0-xsl libperl-dev libpcre3 libpcre3-dev libssl-dev php7.0-gd libgd2-xpm-dev libgeoip-dev libgd2-xpm-dev libssh2-1 php-ssh2 php7.0-mbstring php7.0-soap nginx
+apt-get -y install php7.0-fpm php7.0-mcrypt php7.0-curl php7.0-cli php7.0-mysql php7.0-gd php7.0-intl php7.0-xsl libperl-dev libpcre3 libpcre3-dev libssl-dev php7.0-gd libgd2-xpm-dev libgeoip-dev libgd2-xpm-dev libssh2-1 php-ssh2 php7.0-mbstring php7.0-soap libzip4 php7.0-zip nginx
 
 echo "---> NOW, LET'S COMPILE NGINX WITH PAGESPEED"
 pause
