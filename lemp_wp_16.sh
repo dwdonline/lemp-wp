@@ -165,7 +165,7 @@ cd wordpress
 
 wget -qO  /etc/nginx/wordpress/defaults.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/defaults.conf
 wget -qO  /etc/nginx/wordpress/exclusions.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/exclusions.conf
-wget -qO  /etc/nginx/wordpress/fastcgi-cache.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/fastcgi-cache.conf
+#wget -qO  /etc/nginx/wordpress/fastcgi-cache.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/fastcgi-cache.conf
 wget -qO  /etc/nginx/wordpress/fastcgi-params.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/fastcgi-params.conf
 wget -qO  /etc/nginx/wordpress/gzip.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/gzip.conf
 wget -qO  /etc/nginx/wordpress/http.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/wordpress/http.conf
@@ -196,8 +196,8 @@ wget -q https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/sites-a
 wget -qO /etc/nginx/sites-available/${MY_DOMAIN}.conf https://raw.githubusercontent.com/dwdonline/lemp-wp/master/nginx/sites-available/domain.conf
 
 sed -i "s/example.com/${MY_DOMAIN}/g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
-sed -i "s,fastcgi_cache_path,fastcgi_cache_path ${MY_SITE_PATH}/fastcgi-cache levels=1:2 keys_zone=${MY_DOMAIN}:100m inactive=60m;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
-sed -i "s,fastcgi_cache_domain,fastcgi_cache_domain ${MY_DOMAIN};,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
+#sed -i "s,fastcgi_cache_path,fastcgi_cache_path ${MY_SITE_PATH}/fastcgi-cache levels=1:2 keys_zone=${MY_DOMAIN}:100m inactive=60m;,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
+#sed -i "s,fastcgi_cache_domain,fastcgi_cache_domain ${MY_DOMAIN};,g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s/www.example.com/www.${MY_DOMAIN}/g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,root /var/www/html,root ${MY_SITE_PATH},g" /etc/nginx/sites-available/${MY_DOMAIN}.conf
 sed -i "s,user  www-data,user  ${MY_WEB_USER},g" /etc/nginx/nginx.conf
