@@ -48,8 +48,7 @@ add-apt-repository ppa:nginx/$nginx
 
 apt-get -y update
 
-apt-get -y install php7.0-fpm php7.0-mcrypt php7.0-curl php7.0-cli php7.0-mysql php7.0-gd php7.0-intl php7.0-xsl libperl-dev libpcre3 libpcre3-dev libssl-dev php7.0-gd libgd2-xpm-dev libgeoip-dev libgd2-xpm-dev libssh2-1 php-ssh2 php7.0-mbstring php7.0-soap libzip4 php7.0-zip nginx
-
+apt-get -y install php7.0-fpm php7.0-mcrypt php7.0-curl php7.0-cli php7.0-mysql php7.0-gd php7.0-intl php7.0-xsl php7.0-gd php-ssh2 php7.0-mbstring php7.0-soap php7.0-zip libgd2-xpm-dev libgeoip-dev libgd2-xpm-dev libssh2-1 libzip4 libperl-dev libpcre3 libpcre3-dev libssl-dev zlib1g-dev nginx
 echo "---> NOW, LET'S COMPILE NGINX WITH PAGESPEED"
 pause
 
@@ -57,12 +56,12 @@ cd
 wget -q https://github.com/pagespeed/ngx_pagespeed/archive/master.zip
 unzip master.zip
 cd ngx_pagespeed-master
-wget -q https://dl.google.com/dl/page-speed/psol/1.11.33.2.tar.gz
-tar -xzvf 1.11.33.2.tar.gz # expands to psol/
+wget -q https://dl.google.com/dl/page-speed/psol/1.11.33.3.tar.gz
+tar -xzvf 1.11.33.3.tar.gz # expands to psol/
 cd
-wget -q http://nginx.org/download/nginx-1.10.1.tar.gz
-tar -xzvf nginx-1.10.1.tar.gz
-cd nginx-1.10.1
+wget -q http://nginx.org/download/nginx-1.11.3.tar.gz
+tar -xzvf nginx-1.11.3.tar.gz
+cd nginx-1.11.3
 
 ./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --with-http_stub_status_module --user=www-data --group=www-data --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-http_image_filter_module --add-module=$HOME/ngx_pagespeed-master --with-ipv6 --with-http_geoip_module --with-http_realip_module;
 
@@ -336,7 +335,7 @@ chown -R www-data.www-data wp-content
 echo "---> Let;s cleanup:"
 pause
 cd
-rm -rf master.zip nginx-1.10.1 nginx-1.10.1.tar.gz ngx_pagespeed-master
+rm -rf master.zip nginx-1.11.3 nginx-1.11.3.tar.gz ngx_pagespeed-master
 
 cd ${MY_SITE_PATH}
 
